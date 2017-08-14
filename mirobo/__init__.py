@@ -5,4 +5,5 @@ from mirobo.vacuum import Vacuum, VacuumException
 from mirobo.plug import Plug
 from mirobo.strip import Strip
 from mirobo.ceil import Ceil
+from mirobo.philips_eyecare import PhilipsEyecare
 from mirobo.device import Device, DeviceException
