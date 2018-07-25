@@ -10,6 +10,20 @@ from .device import Device
 _LOGGER = logging.getLogger(__name__)
 
 
+MODEL_FAN_V2 = 'zhimi.fan.v2'
+MODEL_FAN_V3 = 'zhimi.fan.v3'
+MODEL_FAN_SA1 = 'zhimi.fan.sa1'
+
+AVAILABLE_PROPERTIES = {
+    MODEL_FAN_V2: ['temp_dec', 'humidity', 'angle', 'speed', 'poweroff_time', 'power', 'ac_power', 'battery',
+                   'angle_enable', 'speed_level', 'natural_level', 'child_lock', 'buzzer', 'led_b', 'led'],
+    MODEL_FAN_V3: ['temp_dec', 'humidity', 'angle', 'speed', 'poweroff_time', 'power', 'ac_power', 'battery',
+                   'angle_enable', 'speed_level', 'natural_level', 'child_lock', 'buzzer', 'led_b', 'led'],
+    MODEL_FAN_SA1: ['led', 'angle', 'speed', 'poweroff_time', 'power', 'ac_power', 'angle_enable', 'speed_level',
+                    'natural_level', 'child_lock', 'buzzer', 'led_b', 'use_time'],
+}
+
+
 class LedBrightness(enum.Enum):
     Bright = 0
     Dim = 1
@@ -165,6 +179,16 @@ class FanStatus:
 class Fan(Device):
     """Main class representing the Xiaomi Smart Fan."""
 
+    def __init__(self, ip: str = None, token: str = None, start_id: int = 0,
+                 debug: int = 0, lazy_discover: bool = True,
+                 model: str = MODEL_FAN_V3) -> None:
+        super().__init__(ip, token, start_id, debug, lazy_discover)
+
+        if model in AVAILABLE_PROPERTIES:
+            self.model = model
+        else:
+            self.model = MODEL_FAN_V3
+
     @command(
         default_output=format_output(
             "",
@@ -187,11 +211,7 @@ class Fan(Device):
     )
     def status(self) -> FanStatus:
         """Retrieve properties."""
-        properties = ['temp_dec', 'humidity', 'angle', 'speed',
-                      'poweroff_time', 'power', 'ac_power', 'battery',
-                      'angle_enable', 'speed_level', 'natural_level',
-                      'child_lock', 'buzzer', 'led_b', 'led']
-
+        properties = AVAILABLE_PROPERTIES[self.model]
         values = self.send(
             "get_prop",
             properties
