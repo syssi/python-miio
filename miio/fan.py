@@ -25,12 +25,19 @@ class FanStatus:
     """Container for status reports from the Xiaomi Smart Fan."""
 
     def __init__(self, data: Dict[str, Any]) -> None:
-        # ['temp_dec', 'humidity', 'angle', 'speed', 'poweroff_time', 'power',
-        # 'ac_power', 'battery', 'angle_enable', 'speed_level',
-        # 'natural_level', 'child_lock', 'buzzer', 'led_b', 'led']
-        #
-        # [232, 46, 30, 298, 0, 'on', 'off', 98, 'off', 1, 0, 'off', 'on',
-        # 1, 'on']
+        """
+        Supported device models: zhimi.fan.v2, zhimi.fan.v3, zhimi.fan.sa1
+
+        Response of a Smart Fan V3 (zhimi.fan.v3):
+        {'temp_dec': 232, 'humidity': 46, 'angle': 30, 'speed': 298, 'poweroff_time': 0, 'power': 'on',
+         'ac_power': 'off', 'battery': 98, 'angle_enable': 'off', 'speed_level': 1, 'natural_level': 0, 
+         'child_lock': 'off', 'buzzer': 'on', 'led_b': 1, 'led': 'on'}
+
+        Response of a Smart Fan SA1 (zhimi.fan.sa1):
+        {'led': 0, 'angle': 120, 'speed': 277, 'poweroff_time': 0, 'power': 'on', 'ac_power': 'on',
+         'angle_enable': 'off', 'speed_level': 1, 'natural_level': 2, 'child_lock': 'off', 'buzzer': 0,
+         'led_b': 0, 'use_time': 2318}
+        """
         self.data = data
 
     @property
