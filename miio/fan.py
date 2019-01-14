@@ -136,6 +136,12 @@ class FanStatus:
             return self.data["natural_level"]
 
     @property
+    def natural_mode(self) -> Optional[bool]:
+        """True if natural mode is on."""
+        if self.natural_speed is not None:
+            return self.natural_speed != 0
+
+    @property
     def direct_speed(self) -> Optional[int]:
         """Speed level in direct mode."""
         if "speed_level" in self.data and self.data["speed_level"] is not None:
@@ -206,6 +212,7 @@ class FanStatus:
             "led_brightness=%s, " \
             "buzzer=%s, " \
             "child_lock=%s, " \
+            "natural_mode=%s, " \
             "natural_speed=%s, " \
             "direct_speed=%s, " \
             "speed=%s, " \
@@ -225,6 +232,7 @@ class FanStatus:
              self.led_brightness,
              self.buzzer,
              self.child_lock,
+             self.natural_mode,
              self.natural_speed,
              self.direct_speed,
              self.speed,

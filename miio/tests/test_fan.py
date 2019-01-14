@@ -95,6 +95,7 @@ class TestFanV2(TestCase):
         assert self.state().oscillate is (self.device.start_state["angle_enable"] == 'on')
         assert self.state().direct_speed == self.device.start_state["speed_level"]
         assert self.state().natural_speed == self.device.start_state["natural_level"]
+        assert self.state().natural_mode is (self.device.start_state["natural_level"] != 0)
         assert self.state().child_lock is (self.device.start_state["child_lock"] == 'on')
         assert self.state().buzzer is (self.device.start_state["buzzer"] == 'on')
         assert self.state().led_brightness == LedBrightness(self.device.start_state["led_b"])
@@ -333,6 +334,7 @@ class TestFanV3(TestCase):
         assert self.state().oscillate is (self.device.start_state["angle_enable"] == 'on')
         assert self.state().direct_speed == self.device.start_state["speed_level"]
         assert self.state().natural_speed == self.device.start_state["natural_level"]
+        assert self.state().natural_mode is (self.device.start_state["natural_level"] != 0)
         assert self.state().child_lock is (self.device.start_state["child_lock"] == 'on')
         assert self.state().buzzer is (self.device.start_state["buzzer"] == 'on')
         assert self.state().led_brightness == LedBrightness(self.device.start_state["led_b"])
