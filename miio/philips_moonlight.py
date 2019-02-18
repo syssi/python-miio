@@ -5,7 +5,7 @@ from typing import Any, Dict, Tuple
 import click
 
 from .click_common import command, format_output
-from .device import Device, DeviceException
+from .device import Device, DeviceException, DeviceError
 from .utils import int_to_rgb, rgb_to_int
 
 _LOGGER = logging.getLogger(__name__)
@@ -146,10 +146,18 @@ class PhilipsMoonlight(Device):
         """Retrieve properties."""
         properties = ['pow', 'sta', 'bri', 'rgb', 'cct', 'snm', 'spr', 'spt', 'wke', 'bl', 'ms',
                       'mb', 'wkp']
-        values = self.send(
-            "get_prop",
-            properties
-        )
+
+        try:
+            values = self.send(
+                "get_prop",
+                properties
+            )
+        except DeviceError as error:
+            if "code" in error and error["code"] == -5001:
+                values = [None] * len(properties)
+                values[0] = 'on'
+            else:
+                raise
 
         properties_count = len(properties)
         values_count = len(values)
