@@ -51,6 +51,33 @@ class Led(enum.Enum):
     Off = 'A'
 
 
+class OperationModeGree(enum.Enum):
+    Off = '00'
+    Cool = '90'
+    Heat = 'C0'
+    Auto = '80'
+
+
+class OperationModeGreeW4tw(enum.Enum):
+    Cool = '4'
+    Heat = '7'
+    Auto = 'C'
+
+
+class FanSpeedGreeWbw(enum.Enum):
+    Auto = 0
+    Low = 1
+    Middle = 3
+    High = 5
+
+
+class FanSpeedGreeWtw(enum.Enum):
+    Auto = 4
+    Low = 5
+    Middle = 6
+    High = 6
+
+
 STORAGE_SLOT_ID = 30
 POWER_OFF = 'off'
 
@@ -63,12 +90,12 @@ DEVICE_COMMAND_TEMPLATES = {
     },
     '0100010727': {
         'deviceType': 'gree_2',
-        'base': '[po][mo][wi][sw][tt]1100190[tt1]205002102000[tt7]0190[tt1]207002000000[tt4]',
+        'base': '[po][mo][wi][sw][tt][li]00[wtw][pmp][tt1]205002102000[tt7]0[wtw][pmp][tt1]2070020000[wbw]0[w4tw]0',
         'off': '01011101004000205002112000D04000207002000000A0'
     },
     '0100004795': {
         'deviceType': 'gree_8',
-        'base': '[po][mo][wi][sw][tt][li]10009090000500'
+        'base': '[po][mo][wi][sw][tt][li]00090900005002'
     },
     '0180333331': {
         'deviceType': 'haier_1',
